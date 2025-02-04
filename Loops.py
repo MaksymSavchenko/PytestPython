@@ -19,3 +19,13 @@ summation = 0
 for j in range(1,6):  # 1-5
     summation = summation + j
 print(summation)
+
+print("-------------")
+
+for k in range(1,10,3): # 3 is index
+    print(k)
+
+print("-------------")
+
+for m in range(10):
+    print(m)
