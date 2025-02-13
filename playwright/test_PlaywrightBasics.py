@@ -22,7 +22,7 @@ def test_core_locators(page:Page):
 #    page.get_by_role("checkbox", name="terms").click()
     page.locator("#terms").check()
     page.get_by_role("button", name="Sign In").click()
-    # Incorrect  username/password. assertion
+    # Incorrect  username/password assertion
     expect(page.get_by_text("Incorrect username/password")).to_be_visible()
 
 
