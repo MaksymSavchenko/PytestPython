@@ -41,6 +41,13 @@ def test_firefox(playwright:Playwright):
     # Incorrect  username/password. assertion
     expect(page.get_by_text("Incorrect username/password")).to_be_visible()
 
+def test_child_window(page:Page):
+    page.goto("https://rahulshettyacademy.com/loginpagePractise")
+    with page.expect_popup() as new_page:
+        page.locator(".blinkingText").click()
+        child_page = new_page.value
+        text = child_page.locator(".red").text_content()
+        print('\n' + text.split(' ')[4])
 
 
 time.sleep(5)
