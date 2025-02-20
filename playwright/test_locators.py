@@ -51,5 +51,10 @@ def test_tabel_handling(page: Page):
             break
 
     rice_row = page.locator("tr").filter(has_text="Rice")
-    #print(f"Rice row is {rice_row}")
+    #print(f"Rice row is {price_col_value}")
     expect(rice_row.locator("td").nth(price_col_value)).to_have_text("37")
+
+def test_run(page: Page) -> None:
+    page.goto("https://www.kiwico.com/")
+    page.get_by_role("heading", name="Get 40% off *").click(button="right")
+    expect(page.get_by_role("heading", name="Get 40% off *")).to_be_visible()
