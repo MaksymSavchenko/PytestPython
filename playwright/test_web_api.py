@@ -1,10 +1,9 @@
 import time
 from playwright.sync_api import Page, expect, Playwright
-
 from utils.api_base import APIutils
 
 
-def test_e2e_web_api(playwright:Playwright):
+def test_e2e_web_api(playwright: Playwright):
     browser = playwright.chromium.launch(headless=False)
     context = browser.new_context()
     page = context.new_page()
