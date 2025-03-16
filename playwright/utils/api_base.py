@@ -20,6 +20,8 @@ class APIutils:
                                             data=orders_payload
         )
         print(response.json())
+
         response_body = response.json()
         order_id = response_body["orders"][0]
+        print("{} {}".format("Order ID is:", order_id))
         return order_id
