@@ -3,6 +3,9 @@ import time
 
 import pytest
 from playwright.sync_api import Page, expect, Playwright
+
+from pageObjects.login import LoginPage
+from pageObjects.dashboard import DashBoardPage
 from utils.api_base import APIutils
 
 
@@ -13,21 +16,25 @@ with open('data/credentials.json') as f:
 
 @pytest.mark.parametrize('user_credentials', user_credentials_list)
 def test_e2e_web_api(playwright: Playwright, user_credentials):
+    user_name = user_credentials['userEmail']
+    user_password = user_credentials['userPassword']
     browser = playwright.chromium.launch(headless=False)
     context = browser.new_context()
     page = context.new_page()
 
     api_utils = APIutils()
-    order_id = api_utils.create_order(playwright)
+    order_id = api_utils.create_order(playwright,user_credentials)
 
-    page.goto("https://rahulshettyacademy.com/client")
-    page.get_by_placeholder("email@example.com").fill(user_credentials["userEmail"])
-    page.get_by_placeholder("enter your passsword").fill(user_credentials["userPassword"])
-    page.get_by_role("button", name="Login").click()
-    page.get_by_role("button", name="ORDERS").click()
+    login_page = LoginPage(page)
+    login_page.navigate()
+    dashboard_page = login_page.login(user_name, user_password)
+    orders_history_page = dashboard_page.select_orders_nav_link()
+    order_details_page = orders_history_page.select_order(order_id)
+    order_details_page.verify_order_message()
 
-    row = page.locator("tr").filter(has_text=order_id)
-    row.get_by_role("button", name="View").click()
-    expect(page.locator(".tagline")).to_have_text("Thank you for Shopping With Us")
+
+
+
+
     context.close() #optional to clear the cache
     #print("{} {}".format("Order ID is:", order_id))
