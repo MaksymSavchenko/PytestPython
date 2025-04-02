@@ -1,3 +1,4 @@
+import time
 from .dashboard import DashBoardPage
 
 class LoginPage:

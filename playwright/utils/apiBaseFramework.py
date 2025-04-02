@@ -1,13 +1,14 @@
 import json
+import time
+
 import pytest
-from playwright.sync_api import Page, expect, Playwright
+from playwright.sync_api import expect, Playwright
 
 from pageObjects.login import LoginPage
 from pageObjects.dashboard import DashBoardPage
-from utils.apiBaseFramework import APIutils
+from .api_base import APIutils
 
-
-with open('data/credentials.json') as f: #f - stream object
+with open('data/credentials.json') as f:
     test_data = json.load(f)
     print(test_data)
     user_credentials_list = test_data['user_credentials']
@@ -16,8 +17,10 @@ with open('data/credentials.json') as f: #f - stream object
 def test_e2e_web_api(playwright: Playwright, browserInstance, user_credentials):
     user_name = user_credentials['userEmail']
     user_password = user_credentials['userPassword']
+
     api_utils = APIutils()
     order_id = api_utils.create_order(playwright,user_credentials)
+
     login_page = LoginPage(browserInstance)
     login_page.navigate()
     dashboard_page = login_page.login(user_name, user_password)
