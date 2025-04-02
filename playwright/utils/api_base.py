@@ -14,13 +14,12 @@ class APIutils:
         response_body = response.json()
         return response_body["token"]
 
-    def create_order(self,playwright:Playwright,user_credentials):
-        token=self.get_token(playwright,user_credentials)
+    def create_order(self,playwright:Playwright, user_credentials):
+        token=self.get_token(playwright, user_credentials)
         api_request_context = playwright.request.new_context(base_url="https://rahulshettyacademy.com")
         response = api_request_context.post("/api/ecom/order/create-order",
                                             headers = {"Authorization": token, "Content-type": "application/json"},
-                                            data=orders_payload
-        )
+                                            data=orders_payload)
         print(response.json())
 
         response_body = response.json()

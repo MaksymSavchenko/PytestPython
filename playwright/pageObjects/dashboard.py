@@ -8,5 +8,5 @@ class DashBoardPage:
 
     def select_orders_nav_link(self):
         self.page.get_by_role("button", name="ORDERS").click()
-        order_history_rage = OrdersHistoryPage(self.page)
-        return order_history_rage
+        order_history_page = OrdersHistoryPage(self.page)
+        return order_history_page
